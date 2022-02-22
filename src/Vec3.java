@@ -61,4 +61,11 @@ public class Vec3 {
     public Vec3 unitVector() { return this.div(this.length()); }
 
     public void print(PrintStream p) { p.print(x + " " + y + " " + z); }
+
+    public static void printAsColor(PrintStream p, Vec3 c) {
+        p.println(
+            (int) (255.999 * c.getX()) + " " +
+            (int) (255.999 * c.getY()) + " " + 
+            (int) (255.999 * c.getZ()));
+    }
 }

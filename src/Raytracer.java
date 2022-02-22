@@ -1,4 +1,4 @@
-import java.io.FileWriter;
+import java.io.PrintStream;
 
 public class Raytracer {
     public static final int WIDTH = 256;
@@ -6,20 +6,23 @@ public class Raytracer {
 
     public static void main(String[] args) throws Exception {
         try {
-            FileWriter f = new FileWriter("output.ppm");
+            PrintStream p = new PrintStream("output.ppm");
 
-            f.write("P3\n");
-            f.write(WIDTH + " " + HEIGHT + "\n");
-            f.write(255 + "\n");
+            p.println("P3");
+            p.println(WIDTH + " " + HEIGHT);
+            p.println(255);
 
-            for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++) {
-                    f.write("255 0 0\n");
-                    System.out.println("Scanline " + (i + 1) + " of 256");
+            for (int j = HEIGHT; j >= 0; j--) {
+                System.out.println("Scanlines remaining: " + j);
+                for (int i = 0; i < WIDTH; i++) {
+                    Vec3 pixelColor = new Vec3(
+                        (double) (i) / (WIDTH - 1), 
+                        (double) (j) / (HEIGHT - 1), 0.25);
+                    Vec3.printAsColor(p, pixelColor);
                 }
             }
 
-            f.close();
+            p.close();
         } catch (Exception e) {
             System.out.println("Error writing file");
         }
